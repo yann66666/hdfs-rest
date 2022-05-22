@@ -28,3 +28,9 @@ func TestClient_Walk(t *testing.T) {
 	})
 	assert.Equal(t, err, nil)
 }
+
+func TestClient_GetFileChecksum(t *testing.T) {
+	data, err := cli.GetFileChecksum("/test/2.txt")
+	assert.Equal(t, err, nil)
+	t.Logf("md5: %v", data)
+}

@@ -14,10 +14,11 @@ import (
 )
 
 const (
-	ListStatus    = "%s/webhdfs/v1%s?op=LISTSTATUS&user.name=%s"
-	GetFileStatus = "%s/webhdfs/v1%s?op=GETFILESTATUS&user.name=%s"
-	TypeFile      = "FILE"
-	TypeDir       = "DIRECTORY"
+	ListStatus      = "%s/webhdfs/v1%s?op=LISTSTATUS&user.name=%s"
+	GetFileStatus   = "%s/webhdfs/v1%s?op=GETFILESTATUS&user.name=%s"
+	GetFileChecksum = "%s/webhdfs/v1%s?op=GETFILECHECKSUM&user.name=%s"
+	TypeFile        = "FILE"
+	TypeDir         = "DIRECTORY"
 )
 
 type FileStatus struct {
@@ -114,4 +115,39 @@ func (c *client) recursionDir(path string, callback func(prefixPath string, stat
 		}
 		c.recursionDir(filepath.Join(path, ls[i].PathSuffix), callback)
 	}
+}
+
+type FileChecksum struct {
+	Algorithm string
+	Bytes     string
+	Length    int64
+}
+
+// GetFileChecksum 获取指定文件的md5值
+func (c *client) GetFileChecksum(path string) (*FileChecksum, error) {
+	node, err := c.getDataNode()
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf(GetFileChecksum, node, path, c.user), nil)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, GetErrFromBody(resp)
+	}
+	all, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var ret FileChecksum
+	return &ret, json.Unmarshal([]byte(gjson.Get(string(all), "FileChecksum").Raw), &ret)
 }
