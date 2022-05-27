@@ -2,7 +2,7 @@
 // Date: 2022/5/20
 // Desc: hdfs_rest
 
-package hdfsrest
+package hdfs
 
 import (
 	"fmt"
