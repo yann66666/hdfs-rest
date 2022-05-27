@@ -4,7 +4,7 @@
 
 package hdfs
 
-var cli *client
+var cli *Client
 
 func init() {
 	cli = New(&ClientOption{

@@ -35,7 +35,7 @@ const (
 	DefaultReplication = 1      //默认复制数量
 )
 
-type client struct {
+type Client struct {
 	*http.Client
 	dataNodes []string
 	sync.RWMutex
@@ -51,7 +51,7 @@ type ClientOption struct {
 	Transport   *http.Transport
 }
 
-func New(opt *ClientOption) *client {
+func New(opt *ClientOption) *Client {
 	if len(opt.DataNodes) == 0 {
 		panic(ErrBadOptionsDataNodeCannotNull)
 	}
@@ -72,7 +72,7 @@ func New(opt *ClientOption) *client {
 		opt.Transport = DefaultTransport
 	}
 
-	return &client{
+	return &Client{
 		Client: &http.Client{
 			Transport: opt.Transport,
 			Timeout:   opt.Timeout,
@@ -83,7 +83,7 @@ func New(opt *ClientOption) *client {
 	}
 }
 
-func (c *client) getDataNode() (string, error) {
+func (c *Client) getDataNode() (string, error) {
 	c.RLock()
 	defer c.RUnlock()
 	length := len(c.dataNodes)

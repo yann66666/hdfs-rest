@@ -20,7 +20,7 @@ const (
 )
 
 // Mkdir 创建目录并设置目录权限
-func (c *client) Mkdir(dirname string, perm os.FileMode) error {
+func (c *Client) Mkdir(dirname string, perm os.FileMode) error {
 	node, err := c.getDataNode()
 	if err != nil {
 		return err
@@ -42,7 +42,7 @@ func (c *client) Mkdir(dirname string, perm os.FileMode) error {
 }
 
 // MkdirAll 创建目录并设置目录权限
-func (c *client) MkdirAll(dirname string, perm os.FileMode) error {
+func (c *Client) MkdirAll(dirname string, perm os.FileMode) error {
 	return c.Mkdir(dirname, perm)
 }
 
@@ -56,7 +56,7 @@ type ContentSummary struct {
 }
 
 // GetContentSummary 获取目录的内容摘要
-func (c *client) GetContentSummary(dirname string) (*ContentSummary, error) {
+func (c *Client) GetContentSummary(dirname string) (*ContentSummary, error) {
 	node, err := c.getDataNode()
 	if err != nil {
 		return nil, err

@@ -35,7 +35,7 @@ type FileStatus struct {
 }
 
 // ListStatus 获取指定路径下列表
-func (c *client) ListStatus(path string) ([]FileStatus, error) {
+func (c *Client) ListStatus(path string) ([]FileStatus, error) {
 	node, err := c.getDataNode()
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func (c *client) ListStatus(path string) ([]FileStatus, error) {
 }
 
 // GetFileStatus 获取指定文件的信息
-func (c *client) GetFileStatus(path string) (*FileStatus, error) {
+func (c *Client) GetFileStatus(path string) (*FileStatus, error) {
 	node, err := c.getDataNode()
 	if err != nil {
 		return nil, err
@@ -91,7 +91,7 @@ func (c *client) GetFileStatus(path string) (*FileStatus, error) {
 }
 
 // Walk 遍历某个路径下的目录
-func (c *client) Walk(path string, callback func(prefixPath string, status FileStatus)) error {
+func (c *Client) Walk(path string, callback func(prefixPath string, status FileStatus)) error {
 	status, err := c.GetFileStatus(path)
 	if err != nil {
 		return err
@@ -103,7 +103,7 @@ func (c *client) Walk(path string, callback func(prefixPath string, status FileS
 	return nil
 }
 
-func (c *client) recursionDir(path string, callback func(prefixPath string, status FileStatus)) {
+func (c *Client) recursionDir(path string, callback func(prefixPath string, status FileStatus)) {
 	ls, _ := c.ListStatus(path)
 	if len(ls) == 0 {
 		return
@@ -124,7 +124,7 @@ type FileChecksum struct {
 }
 
 // GetFileChecksum 获取指定文件的md5值
-func (c *client) GetFileChecksum(path string) (*FileChecksum, error) {
+func (c *Client) GetFileChecksum(path string) (*FileChecksum, error) {
 	node, err := c.getDataNode()
 	if err != nil {
 		return nil, err

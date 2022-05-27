@@ -17,7 +17,7 @@ const (
 )
 
 // ReadFile 读取指定文件
-func (c *client) Read(path string) ([]byte, error) {
+func (c *Client) Read(path string) ([]byte, error) {
 	node, err := c.getDataNode()
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (c *client) Read(path string) ([]byte, error) {
 }
 
 // ReadFile 读取指定文件
-func (c *client) ReadFile(path string, offset, length uint64, bufferSize uint) ([]byte, error) {
+func (c *Client) ReadFile(path string, offset, length uint64, bufferSize uint) ([]byte, error) {
 	node, err := c.getDataNode()
 	if err != nil {
 		return nil, err

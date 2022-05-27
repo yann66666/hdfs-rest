@@ -20,7 +20,7 @@ const (
 )
 
 // Create 使用默认配置创建文件
-func (c *client) Create(path string, data []byte) error {
+func (c *Client) Create(path string, data []byte) error {
 	node, err := c.getDataNode()
 	if err != nil {
 		return err
@@ -43,7 +43,7 @@ func (c *client) Create(path string, data []byte) error {
 }
 
 // CreateFile 自定义配置创建文件
-func (c *client) CreateFile(path string, overwrite bool, blockSize uint64, permission os.FileMode, bufferSize uint, replication uint16, data []byte) error {
+func (c *Client) CreateFile(path string, overwrite bool, blockSize uint64, permission os.FileMode, bufferSize uint, replication uint16, data []byte) error {
 	node, err := c.getDataNode()
 	if err != nil {
 		return err
@@ -78,7 +78,7 @@ func (c *client) CreateFile(path string, overwrite bool, blockSize uint64, permi
 	return nil
 }
 
-func (c *client) Append(path string, bufferSize uint, data []byte) error {
+func (c *Client) Append(path string, bufferSize uint, data []byte) error {
 	node, err := c.getDataNode()
 	if err != nil {
 		return err
